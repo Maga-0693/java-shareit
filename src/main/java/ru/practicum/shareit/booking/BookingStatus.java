@@ -1,7 +1,7 @@
 package ru.practicum.shareit.booking;
 
 public enum BookingStatus {
-    WAITING,    // Ожидает подтверждения
+    WAITING,    // Ожидание подтверждения
     APPROVED,   // Подтверждено
     REJECTED,   // Отклонено
     CANCELLED    // Отменено
