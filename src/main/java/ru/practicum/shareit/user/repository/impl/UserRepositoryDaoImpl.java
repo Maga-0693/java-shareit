@@ -1,5 +1,7 @@
 package ru.practicum.shareit.user.repository.impl;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.CustomEntityNotFoundException;
 import ru.practicum.shareit.user.model.User;
@@ -9,11 +11,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRepositoryDaoImpl implements UserRepository {
 
-    private final AtomicLong idGenerator = new AtomicLong(0);
+    final AtomicLong idGenerator = new AtomicLong(0);
 
-    private final Map<Long, User> users = new HashMap<>();
+    final Map<Long, User> users = new HashMap<>();
 
     @Override
     public Boolean isEmailAlreadyExist(String email) {

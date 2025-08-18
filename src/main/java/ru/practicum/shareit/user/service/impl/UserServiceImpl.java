@@ -1,6 +1,8 @@
 package ru.practicum.shareit.user.service.impl;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.ConflictException;
@@ -20,9 +22,10 @@ import static ru.practicum.shareit.user.mapper.UserMapper.toUserDto;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
+    UserRepository repository;
 
     @Override
     public UserDto saveUser(UserDto userDto) {

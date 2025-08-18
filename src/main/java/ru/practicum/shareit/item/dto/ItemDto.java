@@ -1,9 +1,7 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.validation.OnCreate;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,15 +11,16 @@ import jakarta.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemDto {
-    private Long id;
+    Long id;
 
     @NotBlank(groups = {OnCreate.class})
-    private String name;
+    String name;
 
     @NotBlank(groups = {OnCreate.class})
-    private String description;
+    String description;
 
     @NotNull(groups = {OnCreate.class})
-    private Boolean available;
+    Boolean available;
 }

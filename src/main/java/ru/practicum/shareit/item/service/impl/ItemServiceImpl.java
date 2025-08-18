@@ -1,6 +1,8 @@
 package ru.practicum.shareit.item.service.impl;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.CustomEntityNotFoundException;
@@ -20,10 +22,11 @@ import static ru.practicum.shareit.item.mapper.ItemMapper.toItemDto;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ItemServiceImpl implements ItemService {
 
-    private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
+    ItemRepository itemRepository;
+    UserRepository userRepository;
 
     @Override
     public ItemDto saveItem(Long id, ItemDto itemDto) {
@@ -44,7 +47,9 @@ public class ItemServiceImpl implements ItemService {
         Item itemToUpdate = itemRepository.getById(itemId)
                 .orElseThrow(() -> new CustomEntityNotFoundException("Item not exist"));
         if (!itemToUpdate.getOwner().getId().equals(id)) {
-            throw new CustomEntityNotFoundException("Owner not exist");
+            throw new CustomEntityNotFoundException(
+                    String.format("User with id=%d is not the owner of item with id=%d", id, itemId)
+            );
         }
         itemToUpdate = toItem(itemDto);
         Item updatedItem = itemRepository.updateItem(itemId, itemToUpdate);

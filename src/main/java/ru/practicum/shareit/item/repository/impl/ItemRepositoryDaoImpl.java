@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item.repository.impl;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.CustomEntityNotFoundException;
 import ru.practicum.shareit.item.model.Item;
@@ -10,10 +12,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRepositoryDaoImpl implements ItemRepository {
 
-    private final AtomicLong idGenerator = new AtomicLong(0);
-    private final Map<Long, Item> items = new HashMap<>();
+    final AtomicLong idGenerator = new AtomicLong(0);
+    final Map<Long, Item> items = new HashMap<>();
 
     @Override
     public Item saveItem(Item item) {
