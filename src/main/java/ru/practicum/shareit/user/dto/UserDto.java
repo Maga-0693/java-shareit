@@ -1,7 +1,9 @@
 package ru.practicum.shareit.user.dto;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.shareit.validation.OnCreate;
 import ru.practicum.shareit.validation.OnUpdate;
 
@@ -12,12 +14,11 @@ import jakarta.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
-    Long id;
-    String name;
+    private Long id;
+    private String name;
 
     @Email(groups = {OnCreate.class, OnUpdate.class})
     @NotNull(groups = {OnCreate.class})
-    String email;
+    private String email;
 }
