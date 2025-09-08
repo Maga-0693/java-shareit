@@ -1,10 +1,11 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit.user.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.validation.OnCreate;
+import ru.practicum.shareit.validation.OnUpdate;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 @Data
@@ -12,15 +13,11 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ItemDto {
+public class UserDto {
     Long id;
-
-    @NotBlank(groups = {OnCreate.class})
     String name;
 
-    @NotBlank(groups = {OnCreate.class})
-    String description;
-
+    @Email(groups = {OnCreate.class, OnUpdate.class})
     @NotNull(groups = {OnCreate.class})
-    Boolean available;
+    String email;
 }
