@@ -51,9 +51,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingResponseDto updateBooking(Long ownerId, Long bookingId, Boolean approveStatus) {
         Booking booking = bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId);
-        if (booking == null) {
-            throw new CustomEntityNotFoundException("Booking not found");
-        }
         if (!Objects.equals(booking.getItem().getOwner().getId(), ownerId)) {
             throw new CustomEntityNotFoundException("Wrong owner id");
         }
@@ -75,7 +72,9 @@ public class BookingServiceImpl implements BookingService {
         }
         boolean isBooker = Objects.equals(booking.getBooker().getId(), id);
         boolean isOwner = Objects.equals(booking.getItem().getOwner().getId(), id);
-        if (isBooker || isOwner) {
+        if (isBooker) {
+            return toBookingResponseDto(booking);
+        } else if (isOwner) {
             return toBookingResponseDto(booking);
         } else {
             throw new CustomEntityNotFoundException("Entity not found!");
@@ -137,16 +136,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void bookingTimeValidation(BookingRequestDto requestDto) {
-        LocalDateTime now = LocalDateTime.now();
-
-        if (requestDto.getStart().isBefore(now)) {
+        if (requestDto.getStart().isBefore(LocalDateTime.now())) {
             throw new CustomBadRequestException("Start time must be in future");
+        }
+        if (requestDto.getStart().equals(requestDto.getEnd())) {
+            throw new CustomBadRequestException("Start time must be equal end time");
         }
         if (requestDto.getStart().isAfter(requestDto.getEnd())) {
             throw new CustomBadRequestException("Start time must be before end time");
-        }
-        if (requestDto.getStart().isEqual(requestDto.getEnd())) {
-            throw new CustomBadRequestException("Start time cannot be equal to end time");
         }
     }
 }
