@@ -45,4 +45,11 @@ public class CustomExceptionHandler {
     public Map<String, String> handlePostmanTest(final IllegalStateException e) {
         return Map.of("error", e.getMessage());
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseErrorDto handleAccessDeniedException(final AccessDeniedException e) {
+        log.warn("Access denied: {}", e.getMessage());
+        return new ResponseErrorDto("Access denied", e.getMessage());
+    }
 }

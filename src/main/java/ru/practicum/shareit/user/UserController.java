@@ -15,7 +15,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/users", produces = "application/json")
+@RequestMapping(path = "/users")
 public class UserController {
 
     private final UserService service;

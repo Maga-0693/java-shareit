@@ -9,6 +9,7 @@ import ru.practicum.shareit.booking.enumeration.BookingState;
 import ru.practicum.shareit.booking.enumeration.BookingStatus;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.service.api.BookingService;
+import ru.practicum.shareit.exception.AccessDeniedException;
 import ru.practicum.shareit.exception.CustomBadRequestException;
 import ru.practicum.shareit.exception.CustomEntityNotFoundException;
 import ru.practicum.shareit.item.model.Item;
@@ -51,8 +52,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingResponseDto updateBooking(Long ownerId, Long bookingId, Boolean approveStatus) {
         Booking booking = bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId);
+        if (booking == null) {
+            throw new CustomEntityNotFoundException("Booking not found");
+        }
         if (!Objects.equals(booking.getItem().getOwner().getId(), ownerId)) {
-            throw new CustomEntityNotFoundException("Wrong owner id");
+            throw new AccessDeniedException("Only the owner of the item can approve or reject the booking");
         }
         if (booking.getStatus().equals(BookingStatus.WAITING)) {
             BookingStatus newStatus = approveStatus ? BookingStatus.APPROVED : BookingStatus.REJECTED;
@@ -86,7 +90,7 @@ public class BookingServiceImpl implements BookingService {
         userRepository.findById(bookerId).orElseThrow(() -> new CustomEntityNotFoundException("Booker not exist"));
         BookingState fromState;
         try {
-            fromState = BookingState.valueOf(state.toUpperCase());
+            fromState = BookingState.valueOf(state);
         } catch (RuntimeException e) {
             throw new IllegalStateException("Unknown state: " + state);
         }
@@ -113,7 +117,7 @@ public class BookingServiceImpl implements BookingService {
         userRepository.findById(ownerId).orElseThrow(() -> new CustomEntityNotFoundException("Owner not exists"));
         BookingState fromState;
         try {
-            fromState = BookingState.valueOf(state.toUpperCase());
+            fromState = BookingState.valueOf(state);
         } catch (RuntimeException e) {
             throw new IllegalStateException("Unknown state: " + state);
         }
