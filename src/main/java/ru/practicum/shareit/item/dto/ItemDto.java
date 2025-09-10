@@ -1,9 +1,7 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.booking.dto.BookingItemDto;
 import ru.practicum.shareit.validation.OnCreate;
 
@@ -15,19 +13,20 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemDto {
-    private Long id;
+    Long id;
 
     @NotBlank(groups = {OnCreate.class})
-    private String name;
+    String name;
 
     @NotBlank(groups = {OnCreate.class})
-    private String description;
+    String description;
 
     @NotNull(groups = {OnCreate.class})
-    private Boolean available;
+    Boolean available;
 
-    private BookingItemDto lastBooking;
-    private BookingItemDto nextBooking;
-    private List<CommentDto> comments;
+    BookingItemDto lastBooking;
+    BookingItemDto nextBooking;
+    List<CommentDto> comments;
 }
