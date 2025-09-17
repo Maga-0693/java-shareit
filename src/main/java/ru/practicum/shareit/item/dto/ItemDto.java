@@ -2,10 +2,12 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.practicum.shareit.booking.dto.BookingItemDto;
 import ru.practicum.shareit.validation.OnCreate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,4 +25,8 @@ public class ItemDto {
 
     @NotNull(groups = {OnCreate.class})
     Boolean available;
+
+    BookingItemDto lastBooking;
+    BookingItemDto nextBooking;
+    List<CommentDto> comments;
 }
