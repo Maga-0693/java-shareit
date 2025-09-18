@@ -47,7 +47,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenGetRequestToBookingsWithWrongState_thenThrowBadRequestException() throws Exception {
+    void getBookingsWithInvalidState_throwsBadRequest() throws Exception {
         mockMvc.perform(get("/bookings")
                         .header(USER_ID, 1)
                         .param("state", "INVALID_STATE")
@@ -56,7 +56,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenGetBookingsWithInvalidPagination_thenExpectBadRequest() throws Exception {
+    void getBookingsWithInvalidPagination_badRequest() throws Exception {
         mockMvc.perform(get("/bookings")
                         .header(USER_ID, 1)
                         .param("from", "-1")
@@ -73,7 +73,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidStart_thenExpectBadRequest() throws Exception {
+    void invalidStartDate_throwsBadRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))
@@ -90,7 +90,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidEnd_thenExpectBadRequest() throws Exception {
+    void bookItemWithInvalidEnd_throwsBadRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))
@@ -107,7 +107,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidStartBeforeEnd_thenExpectBadRequest() throws Exception {
+    void bookItemWithStartAfterEnd_throwsBadRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))
@@ -125,7 +125,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidNullStart_thenExpectBadRequest() throws Exception {
+    void bookItemWithNullStart_badRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))
@@ -142,7 +142,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidNullEnd_thenExpectBadRequest() throws Exception {
+    void bookItemWithNullEnd_badRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))
@@ -159,7 +159,7 @@ public class BookingGatewayControllerValidationTest {
     }
 
     @Test
-    void whenBookItemWithInvalidNullItemId_thenExpectBadRequest() throws Exception {
+    void bookItemWithNullItemId_badRequest() throws Exception {
         mockMvc.perform(post("/bookings")
                         .header(USER_ID, 1)
                         .content(objectMapper.writeValueAsString(validDto))

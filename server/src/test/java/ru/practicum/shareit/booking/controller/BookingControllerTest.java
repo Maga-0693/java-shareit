@@ -46,7 +46,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void testSaveBookingWhenCalledWithValidParametersThenReturnBookingResponseDto() throws Exception {
+    void saveBooking_withValidParams_returnsResponse() throws Exception {
         BookingRequestDto requestDto = BookingRequestDto.builder()
                 .start(LocalDateTime.now().plusDays(1))
                 .end(LocalDateTime.now().plusDays(2))
@@ -70,7 +70,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void testUpdateBookingWhenCalledWithValidParametersThenReturnBookingResponseDto() throws Exception {
+    void updateValidBooking_returnsResponseDto() throws Exception {
         BookingResponseDto responseDto = BookingResponseDto.builder()
                 .id(1L)
                 .start(LocalDateTime.now().plusDays(1))
@@ -86,7 +86,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void testGetBookingByBookingIdWhenCalledWithValidParametersThenReturnBookingResponseDto() throws Exception {
+    void getBookingById_withValidId_returnsResponse() throws Exception {
         BookingResponseDto responseDto = BookingResponseDto.builder()
                 .id(1L)
                 .start(LocalDateTime.now().plusDays(1))
@@ -101,7 +101,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenCalledWithValidParametersThenReturnListOfBookingResponseDto() throws Exception {
+    void findBookingsByBooker_returnsResponseList() throws Exception {
         BookingResponseDto responseDto = BookingResponseDto.builder()
                 .id(1L)
                 .start(LocalDateTime.now().plusDays(1))
@@ -121,7 +121,7 @@ class BookingControllerTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenCalledWithValidParametersThenReturnListOfBookingResponseDto() throws Exception {
+    void findBookingsByOwner_returnsResponseList() throws Exception {
         BookingResponseDto responseDto = BookingResponseDto.builder()
                 .id(1L)
                 .start(LocalDateTime.now().plusDays(1))

@@ -34,11 +34,13 @@ public class ItemClient extends BaseClient {
     }
 
     public ResponseEntity<Object> updateItem(Long userId, Long itemId, ItemDto dto) {
-        return patch("/" + itemId, userId, dto);
+        String path = String.format("/%d", itemId);
+        return patch(path, userId, dto);
     }
 
     public ResponseEntity<Object> getItem(Long userId, Long itemId) {
-        return get("/" + itemId, userId);
+        String path = String.format("/%d", itemId);
+        return get(path, userId);
     }
 
     public ResponseEntity<Object> getItems(Long userId) {
@@ -46,11 +48,12 @@ public class ItemClient extends BaseClient {
     }
 
     public ResponseEntity<Object> searchByText(String text) {
-        String url = String.format("/search?text=%s", text);
-        return get(url);
+        String path = String.format("/search?text=%s", text);
+        return get(path);
     }
 
     public ResponseEntity<Object> saveComment(Long userId, Long itemId, CommentDto dto) {
-        return post("/" + itemId + "/comment", userId, dto);
+        String path = String.format("/%d/comment", itemId);
+        return post(path, userId, dto);
     }
 }

@@ -90,7 +90,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testSaveBookingWhenAllConditionsAreMetThenBookingResponseDtoIsReturned() {
+    void saveBookingWithAllConditionsMet_returnsDto() {
         when(userRepository.findById(booker.getId())).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(booker)));
         when(itemRepository.findById(item.getId())).thenReturn(Optional.of(ItemMapper.INSTANCE.toItem(item)));
         when(bookingRepository.save(any(Booking.class))).thenReturn(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking));
@@ -105,7 +105,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testSaveBookingWhenUserDoesNotExistThenThrowCustomEntityNotFoundException() {
+    void saveBookingForMissingUser_throwsException() {
         Long bookerId = 1L;
         when(userRepository.findById(bookerId)).thenReturn(Optional.empty());
 
@@ -117,7 +117,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testSaveBookingWhenItemDoesNotExistThenThrowCustomEntityNotFoundException() {
+    void saveBookingForMissingItem_throwsException() {
         Long bookerId = 1L;
         when(userRepository.findById(bookerId)).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(booker)));
         when(itemRepository.findById(bookingRequestDto.getItemId())).thenReturn(Optional.empty());
@@ -130,7 +130,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testSaveBookingWhenItemIsUnavailableThenThrowCustomBadRequestException() {
+    void saveBookingForUnavailableItem_throwsException() {
         Long bookerId = 1L;
         item.setAvailable(false);
         when(userRepository.findById(bookerId)).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(booker)));
@@ -143,7 +143,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testSaveBookingWhenOwnerBooksHisItemThenThrowCustomEntityNotFoundException() {
+    void saveBookingByOwnerForOwnItem_throwsException() {
         Long bookerId = owner.getId();
         when(userRepository.findById(bookerId)).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(owner)));
         when(itemRepository.findById(bookingRequestDto.getItemId())).thenReturn(Optional.of(ItemMapper.INSTANCE.toItem(item)));
@@ -155,7 +155,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testUpdateBookingWhenAllConditionsAreMetThenBookingResponseDtoIsReturned() {
+    void updateBookingWithAllConditionsMet_returnsDto() {
         Booking bookingFromBookingResponseDto = BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking);
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(booking.getId())).thenReturn(bookingFromBookingResponseDto);
         when(bookingRepository.save(any(Booking.class))).thenReturn(bookingFromBookingResponseDto);
@@ -174,7 +174,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testUpdateBookingWhenWrongOwnerIdThenThrowCustomEntityNotFoundException() {
+    void updateBookingWithInvalidOwner_throwsNotFound() {
         Long wrongOwnerId = 3L;
         Long bookingId = booking.getId();
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId)).thenReturn(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking));
@@ -185,7 +185,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testUpdateBookingWhenStatusIsNotWaitingThenThrowCustomBadRequestException() {
+    void updateBookingWithInvalidStatus_throwsBadRequest() {
         Long ownerId = owner.getId();
         Long bookingId = booking.getId();
         Booking bookingFromBookingResponseDto = BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking);
@@ -198,7 +198,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookingIdWhenAllConditionsAreMetThenBookingResponseDtoIsReturned() {
+    void getBookingById_successfullyReturnsDto() {
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(booking.getId())).thenReturn(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking));
 
         BookingResponseDto result = bookingService.getBookingByBookingId(booker.getId(), booking.getId());
@@ -209,7 +209,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookingIdWhenBookingDoesNotExistThenThrowCustomEntityNotFoundException() {
+    void getBookingById_whenNotExists_throwsNotFound() {
         Long userId = 1L;
         Long bookingId = 1L;
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId)).thenReturn(null);
@@ -220,7 +220,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookingIdWhenUserIsNeitherBookerNorOwnerThenThrowCustomEntityNotFoundException() {
+    void getBookingById_whenUserIsStranger_throwsNotFound() {
         Long userId = 3L;
         Long bookingId = booking.getId();
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId)).thenReturn(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking));
@@ -231,7 +231,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookingIdWhenUserIsOwnerThenReturnBookingResponseDto() {
+    void getBookingAsOwner_returnsBookingResponseDto() {
         Long ownerId = owner.getId();
         Long bookingId = booking.getId();
         when(bookingRepository.findBookingByIdWithItemAndBookerEagerly(bookingId)).thenReturn(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking));
@@ -250,7 +250,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenAllConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_returnsList() {
         Long bookerId = 1L;
         String state = "ALL";
         Integer from = 0;
@@ -270,7 +270,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenCURRENTConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_CURRENT_returnsList() {
         Long bookerId = 1L;
         String state = "CURRENT";
         Integer from = 0;
@@ -290,7 +290,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenPASTConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_PAST_returnsList() {
         Long bookerId = 1L;
         String state = "PAST";
         Integer from = 0;
@@ -310,7 +310,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenFUTUREConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_FUTURE_returnsList() {
         Long bookerId = 1L;
         String state = "FUTURE";
         Integer from = 0;
@@ -330,7 +330,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenWAITINGConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_WAITING_returnsList() {
         Long bookerId = 1L;
         String state = "WAITING";
         Integer from = 0;
@@ -350,7 +350,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenREJECTEDConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByBooker_REJECTED_returnsList() {
         Long bookerId = 1L;
         String state = "REJECTED";
         Integer from = 0;
@@ -370,7 +370,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByBookerIdWhenUnknownStateThenThrowException() {
+    void getBookingsByBooker_unknownState_throwsException() {
         Long bookerId = 1L;
         String state = "UNKNOWN_STATE";
         Integer from = 0;
@@ -382,7 +382,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenAllConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_returnsList() {
         Long ownerId = 2L;
         String state = "ALL";
         Integer from = 0;
@@ -403,7 +403,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenCURRENTConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_CURRENT_returnsList() {
         Long ownerId = 2L;
         String state = "CURRENT";
         Integer from = 0;
@@ -424,7 +424,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenPASTConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_PAST_returnsList() {
         Long ownerId = 2L;
         String state = "PAST";
         Integer from = 0;
@@ -445,7 +445,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenFUTUREConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_FUTURE_returnsList() {
         Long ownerId = 2L;
         String state = "FUTURE";
         Integer from = 0;
@@ -466,7 +466,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenWAITINGConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_WAITING_returnsList() {
         Long ownerId = 2L;
         String state = "WAITING";
         Integer from = 0;
@@ -487,7 +487,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenREJECTEDConditionsAreMetThenListOfBookingResponseDtoIsReturned() {
+    void getBookingsByOwner_REJECTED_returnsList() {
         Long ownerId = 2L;
         String state = "REJECTED";
         Integer from = 0;
@@ -508,7 +508,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void testGetBookingByOwnerIdWhenUnknownStateThenThrowException() {
+    void getOwnerBookings_unknownState_throws() {
         Long ownerId = 2L;
         String state = "UNKNOWN_STATE";
         Integer from = 0;

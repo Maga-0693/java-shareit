@@ -50,7 +50,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void testSaveRequestWhenValidRequestThenReturnItemRequestDto() throws Exception {
+    void saveRequest_returnsItemRequestDto() throws Exception {
         when(itemRequestService.saveRequest(any(Long.class), any(ItemRequestDto.class))).thenReturn(itemRequestDto);
 
         mockMvc.perform(post("/requests")
@@ -63,7 +63,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void testGetRequestsWhenValidRequestThenReturnListOfItemRequestDto() throws Exception {
+    void getRequests_returnsItemRequestDtoList() throws Exception {
         when(itemRequestService.getRequests(any(Long.class))).thenReturn(List.of(itemRequestDto));
 
         mockMvc.perform(get("/requests")
@@ -74,7 +74,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void testGetRequestsByPaginationWhenValidRequestThenReturnListOfItemRequestDto() throws Exception {
+    void getRequestsPaginated_returnsItemRequestDtoList() throws Exception {
         when(itemRequestService.getRequestByPagination(any(Long.class), any(Integer.class), any(Integer.class)))
                 .thenReturn(List.of(itemRequestDto));
 
@@ -88,7 +88,7 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    void testGetRequestByIdWhenValidRequestThenReturnItemRequestDto() throws Exception {
+    void getRequestById_returnsItemRequestDto() throws Exception {
         when(itemRequestService.getRequestById(any(Long.class), any(Long.class))).thenReturn(itemRequestDto);
 
         mockMvc.perform(get("/requests/{requestId}", 1L)

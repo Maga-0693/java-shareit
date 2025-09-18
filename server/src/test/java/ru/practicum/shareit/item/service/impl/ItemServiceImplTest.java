@@ -70,7 +70,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testSaveItemWhenAllDependenciesAvailableThenSaveItem() {
+    void saveItem_withAllDependencies_success() {
         Long ownerId = 1L;
         Long requestId = 2L;
         ItemDto itemDto = ItemDto.builder()
@@ -95,7 +95,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testUpdateItemWhenAllDependenciesAvailableThenItemUpdated() {
+    void updateItem_withAllDependencies_success() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(user)));
         when(itemRepository.findById(anyLong())).thenReturn(Optional.of(ItemMapper.INSTANCE.toItem(item)));
         when(itemRepository.save(any(Item.class))).thenReturn(ItemMapper.INSTANCE.toItem(item));
@@ -108,7 +108,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testWhenUpdateItemWithWrongOwnerIdThenMustThrowException() {
+    void updateItem_withWrongOwner_throwsException() {
         Long ownerId = 1L;
         Long wrongOwnerId = 2L;
         Long itemId = 1L;
@@ -130,7 +130,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testGetByIdWhenAllDependenciesAvailableThenItemRetrieved() {
+    void getItemById_withDependencies_returnsItem() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(user)));
         when(itemRepository.findById(anyLong())).thenReturn(Optional.of(ItemMapper.INSTANCE.toItem(item)));
         when(commentRepository.findByItemId(anyLong())).thenReturn(Collections.singletonList(CommentMapper.INSTANCE.toComment(comment)));
@@ -143,7 +143,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void getByIdShouldReturnItemDtoWithCommentsWhenUserIsNotOwner() {
+    void getItemById_notOwner_returnsWithComments() {
         Long userId = 1L;
         Long ownerId = 2L;
         Long itemId = 1L;
@@ -177,7 +177,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testGetAllItemsWhenAllDependenciesAvailableThenAllItemsRetrieved() {
+    void getAllItems_returnsList() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(user)));
         when(itemRepository.getItemsByOwnerId(anyLong())).thenReturn(Collections.singletonList(ItemMapper.INSTANCE.toItem(item)));
         when(bookingRepository.findLastBookingsForOwnerItems(anyLong())).thenReturn(Collections.singletonList(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking)));
@@ -193,7 +193,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testGetAllItemsWithWrongId() {
+    void getAllItemsWithWrongId() {
         when(itemService.getAllItems(null)).thenReturn(new ArrayList<>());
 
         List<ItemDto> result = itemService.getAllItems(null);
@@ -202,7 +202,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void getAllItemsShouldKeepExistingBookingWhenCollisionOccurs() {
+    void getAllItems_onCollision_keepsBooking() {
         Long ownerId = 1L;
         Long itemId = 1L;
         User booker = new User(1L, "User Name", "user@example.com");
@@ -231,7 +231,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void shouldKeepExistingNextBookingWhenCollisionOccurs() {
+    void bookingCollision_keepsNextBooking() {
         Long ownerId = 1L;
         Long itemId = 1L;
         User owner = new User(ownerId, "Owner Name", "owner@example.com");
@@ -260,7 +260,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testSearchByTextWhenAllDependenciesAvailableThenItemsSearched() {
+    void searchByText_findsMatchingItems() {
         when(itemRepository.search(anyString())).thenReturn(Collections.singletonList(ItemMapper.INSTANCE.toItem(item)));
 
         List<ItemDto> result = itemService.searchByText("Item");
@@ -272,7 +272,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void testSaveCommentWhenAllDependenciesAvailableThenCommentSaved() {
+    void saveComment_returnsComment() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(UserMapper.INSTANCE.toUser(user)));
         when(itemRepository.findById(anyLong())).thenReturn(Optional.of(ItemMapper.INSTANCE.toItem(item)));
         when(bookingRepository.findFinishedBookingsByItemAndUser(anyLong(), anyLong())).thenReturn(Collections.singletonList(BookingMapper.INSTANCE.toBookingFromBookingResponseDto(booking)));
@@ -286,7 +286,7 @@ class ItemServiceImplTest {
     }
 
     @Test
-    void saveCommentShouldThrowCustomBadRequestExceptionWhenNoFinishedBookings() {
+    void saveComment_withoutFinishedBookings_throws() {
         Long itemId = 1L;
         Long userId = 1L;
         CommentDto commentDto = new CommentDto();

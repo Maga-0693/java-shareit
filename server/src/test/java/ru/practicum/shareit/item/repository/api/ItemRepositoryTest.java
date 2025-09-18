@@ -56,7 +56,7 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    void whenFindByOwnerId_thenReturnItems() {
+    void findByOwnerId_returnsItems() {
         List<Item> foundItems = itemRepository.getItemsByOwnerId(user.getId());
 
         assertThat(foundItems).hasSize(2);
@@ -65,7 +65,7 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    void whenSearchByKeyword_thenReturnMatchingItems() {
+    void searchByKeyword_returnsMatchingItems() {
         List<Item> foundItems = itemRepository.search("Drill");
 
         assertThat(foundItems).hasSize(1);

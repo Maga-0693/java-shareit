@@ -59,7 +59,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void saveRequestShouldReturnSavedRequest() {
+    void saveRequest_returnsSavedRequest() {
         when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(user));
         when(requestRepository.save(any(ItemRequest.class))).thenReturn(itemRequest);
 
@@ -72,7 +72,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void getRequestsShouldReturnListOfRequests() {
+    void getRequests_returnsRequestList() {
         when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(user));
         when(requestRepository.findItemRequestsByRequestorId(any(Long.class))).thenReturn(List.of(itemRequest));
 
@@ -86,7 +86,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void getRequestByPaginationShouldReturnListOfRequests() {
+    void getRequestsPaginated_returnsList() {
         Page<ItemRequest> page = new PageImpl<>(List.of(itemRequest));
         when(userRepository.findById(any(Long.class))).thenReturn(java.util.Optional.of(user));
         when(requestRepository.findItemRequestsByRequestorId(any(Long.class), any(PageRequest.class))).thenReturn(page);
@@ -101,7 +101,7 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void getRequestByPaginationShouldReturnGetRequestsResult() {
+    void getRequestsPaginated_returnsResult() {
         when(requestRepository.findItemRequestsByRequestorId(any(Long.class), any())).thenReturn(null);
 
         List<ItemRequestDto> result = itemRequestService.getRequestByPagination(1L, null, null);

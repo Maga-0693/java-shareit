@@ -37,7 +37,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testSaveUserWhenValidUserThenReturnSavedUser() throws Exception {
+    void saveUser_returnsSavedUser() throws Exception {
         UserDto userDto = UserDto.builder().name("Test User").email("test@example.com").build();
         UserDto savedUserDto = UserDto.builder().id(1L).name("Test User").email("test@example.com").build();
         when(service.saveUser(any(UserDto.class))).thenReturn(savedUserDto);
@@ -52,7 +52,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testUpdateUserWhenValidUserThenReturnUpdatedUser() throws Exception {
+    void updateUser_returnsUpdatedUser() throws Exception {
         Long userId = 1L;
         UserDto userDto = UserDto.builder().name("Updated User").email("updated@example.com").build();
         UserDto updatedUserDto = UserDto.builder().id(userId).name("Updated User").email("updated@example.com").build();
@@ -68,7 +68,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testGetUserByIdWhenValidIdThenReturnUser() throws Exception {
+    void getUserById_returnsUser() throws Exception {
         Long userId = 1L;
         UserDto userDto = UserDto.builder().id(userId).name("Test User").email("test@example.com").build();
         when(service.getUserById(userId)).thenReturn(userDto);
@@ -81,7 +81,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testDeleteUserByIdWhenValidIdThenReturnNoContent() throws Exception {
+    void deleteUserById_returnsNoContent() throws Exception {
         Long userId = 1L;
 
         doNothing().when(service).deleteUserById(userId);

@@ -47,7 +47,7 @@ class ItemControllerTest {
     }
 
     @Test
-    void testSaveItemWhenCalledWithValidParametersThenReturnItemDto() throws Exception {
+    void whenSaveItem_thenReturnDto() throws Exception {
         ItemDto dto = ItemDto.builder()
                 .name("crafted item")
                 .description("description of the created item")

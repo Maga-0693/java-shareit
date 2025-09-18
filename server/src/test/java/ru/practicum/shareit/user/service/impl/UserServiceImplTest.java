@@ -50,7 +50,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("testSaveUserWhenUserSavedThenReturnUserDto")
-    void testSaveUserWhenUserSavedThenReturnUserDto() {
+    void saveUser_returnsUserDto() {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         UserDto result = userService.saveUser(userDto);
@@ -63,7 +63,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("testUpdateUserWhenUserUpdatedThenReturnUserDto")
-    void testUpdateUserWhenUserUpdatedThenReturnUserDto() {
+    void whenUpdateUser_thenReturnDto() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
@@ -77,7 +77,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("testGetUserByIdWhenUserExistsThenReturnUserDto")
-    void testGetUserByIdWhenUserExistsThenReturnUserDto() {
+    void getUserById_returnsUserDto() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         UserDto result = userService.getUserById(1L);
@@ -90,7 +90,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("testDeleteUserByIdWhenUserExistsThenUserDeleted")
-    void testDeleteUserByIdWhenUserExistsThenUserDeleted() {
+    void deleteUserById_userDeleted() {
         doNothing().when(userRepository).deleteById(anyLong());
 
         userService.deleteUserById(1L);
@@ -100,7 +100,7 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("testGetAllUsersWhenUsersExistThenReturnListOfUserDto")
-    void testGetAllUsersWhenUsersExistThenReturnListOfUserDto() {
+    void findAllUsers_returnsUserDtos() {
         when(userRepository.findAll()).thenReturn(Arrays.asList(user));
 
         List<UserDto> result = userService.getAllUsers();

@@ -46,7 +46,7 @@ public class RequestRepositoryTest {
     }
 
     @Test
-    public void testFindItemRequestsByRequestorIdWhenRecordsExistThenReturnList() {
+    public void findItemRequestsByRequestorId_returnsList() {
         List<ItemRequest> result = requestRepository.findItemRequestsByRequestorId(user.getId());
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(1);
@@ -55,7 +55,7 @@ public class RequestRepositoryTest {
     }
 
     @Test
-    public void testFindItemRequestsByRequestorIdWhenNoRecordsThenReturnEmptyList() {
+    public void findRequestsByRequestorId_returnsEmptyList() {
         List<ItemRequest> result = requestRepository.findItemRequestsByRequestorId(-1L);
         assertThat(result).isEmpty();
     }
