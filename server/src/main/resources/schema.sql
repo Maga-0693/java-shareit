@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users
     email VARCHAR(64)                             NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id),
     CONSTRAINT UQ_USER_EMAIL UNIQUE (email)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS requests
 (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS requests
     created      TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
     CONSTRAINT pk_request PRIMARY KEY (id),
     CONSTRAINT fk_request_requestor FOREIGN KEY (requestor_id) REFERENCES users (id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS items
 (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS items
     CONSTRAINT pk_item PRIMARY KEY (id),
     CONSTRAINT fk_item_owner FOREIGN KEY (owner_id) REFERENCES users (id),
     CONSTRAINT fk_item_request FOREIGN KEY (request_id) REFERENCES requests (id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS bookings
 (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS bookings
     CONSTRAINT pk_booking PRIMARY KEY (id),
     CONSTRAINT fk_booking_item FOREIGN KEY (item_id) REFERENCES items (id),
     CONSTRAINT fk_booking_booker FOREIGN KEY (booker_id) REFERENCES users (id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS comments
 (
@@ -53,4 +53,4 @@ CREATE TABLE IF NOT EXISTS comments
     CONSTRAINT pk_comment PRIMARY KEY (id),
     CONSTRAINT fk_comment_item FOREIGN KEY (item_id) REFERENCES items (id),
     CONSTRAINT fk_comment_author FOREIGN KEY (author_id) REFERENCES users (id)
-);
+    );
