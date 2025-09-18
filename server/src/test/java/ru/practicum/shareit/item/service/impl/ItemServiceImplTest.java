@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item.service.impl;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,25 +38,26 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class ItemServiceImplTest {
 
     @Mock
-    private ItemRepository itemRepository;
+    ItemRepository itemRepository;
     @Mock
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Mock
-    private BookingRepository bookingRepository;
+    BookingRepository bookingRepository;
     @Mock
-    private CommentRepository commentRepository;
+    CommentRepository commentRepository;
     @InjectMocks
-    private ItemServiceImpl itemService;
+    ItemServiceImpl itemService;
 
-    private UserDto user;
-    private ItemDto item;
-    private ItemDto itemDto;
-    private CommentDto comment;
-    private CommentDto commentDto;
-    private BookingResponseDto booking;
+    UserDto user;
+    ItemDto item;
+    ItemDto itemDto;
+    CommentDto comment;
+    CommentDto commentDto;
+    BookingResponseDto booking;
 
     @BeforeEach
     void setUp() {

@@ -1,5 +1,7 @@
 package ru.practicum.shareit.user.service.impl;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,16 +21,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class UserServiceImplTest {
 
     @Mock
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @InjectMocks
-    private UserServiceImpl userService;
+    UserServiceImpl userService;
 
-    private UserDto userDto;
-    private User user;
+    UserDto userDto;
+    User user;
 
     @BeforeEach
     void setUp() {

@@ -1,5 +1,7 @@
 package ru.practicum.shareit.request.controller;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,18 +29,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(ItemRequestController.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class ItemRequestControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
-    private ItemRequestService itemRequestService;
+    ItemRequestService itemRequestService;
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    WebApplicationContext webApplicationContext;
 
-    private ItemRequestDto itemRequestDto;
+    ItemRequestDto itemRequestDto;
 
     @BeforeEach
     void setUp() {

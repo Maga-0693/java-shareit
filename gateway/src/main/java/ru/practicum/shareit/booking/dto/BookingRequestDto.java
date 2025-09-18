@@ -1,14 +1,12 @@
 package ru.practicum.shareit.booking.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.practicum.shareit.validation.StartBeforeEnd;
-
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import ru.practicum.shareit.validation.StartBeforeEnd;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -16,16 +14,17 @@ import java.time.LocalDateTime;
 @StartBeforeEnd
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequestDto {
 
     @NotNull
     @FutureOrPresent
-    private LocalDateTime start;
+    LocalDateTime start;
 
     @NotNull
     @Future
-    private LocalDateTime end;
+    LocalDateTime end;
 
     @NotNull
-    private Long itemId;
+    Long itemId;
 }

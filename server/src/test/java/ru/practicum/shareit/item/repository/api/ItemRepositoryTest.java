@@ -33,14 +33,14 @@ public class ItemRepositoryTest {
         user = userRepository.save(user);
 
         Item item1 = Item.builder()
-                .name("Дрель")
-                .description("Описание дрели")
+                .name("Drill")
+                .description("Description of the drill")
                 .available(true)
                 .owner(user)
                 .build();
         Item item2 = Item.builder()
-                .name("Молоток")
-                .description("Описание молотка")
+                .name("Hammer")
+                .description("Description of the hammer")
                 .available(true)
                 .owner(user)
                 .build();
@@ -66,9 +66,9 @@ public class ItemRepositoryTest {
 
     @Test
     void whenSearchByKeyword_thenReturnMatchingItems() {
-        List<Item> foundItems = itemRepository.search("дрель");
+        List<Item> foundItems = itemRepository.search("Drill");
 
         assertThat(foundItems).hasSize(1);
-        assertThat(foundItems.get(0).getName()).containsIgnoringCase("дрель");
+        assertThat(foundItems.get(0).getName()).containsIgnoringCase("Drill");
     }
 }

@@ -1,13 +1,10 @@
 package ru.practicum.shareit.item.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.practicum.shareit.user.model.User;
-
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import ru.practicum.shareit.user.model.User;
 
 @Entity
 @Table(name = "items")
@@ -15,25 +12,26 @@ import jakarta.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "name")
-    private String name;
+    String name;
 
     @Column(name = "description")
-    private String description;
+    String description;
 
     @Column(name = "is_available")
-    private Boolean available;
+    Boolean available;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private User owner;
+    User owner;
 
     @Column(name = "request_id")
-    private Long requestId;
+    Long requestId;
 }

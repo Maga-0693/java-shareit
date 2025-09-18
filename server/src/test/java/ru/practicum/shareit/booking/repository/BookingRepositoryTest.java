@@ -1,5 +1,7 @@
 package ru.practicum.shareit.booking.repository;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRepositoryTest {
 
     @Autowired
-    private BookingRepository bookingRepository;
+    BookingRepository bookingRepository;
 
     @Autowired
-    private ItemRepository itemRepository;
+    ItemRepository itemRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     Booking booking = new Booking();
     Item item = new Item();

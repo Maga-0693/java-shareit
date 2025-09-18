@@ -1,5 +1,9 @@
 package ru.practicum.shareit.request.repository.api;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,24 +11,23 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestRepositoryTest {
 
     @Autowired
-    private RequestRepository requestRepository;
+    RequestRepository requestRepository;
 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
 
-    private User user;
-    private ItemRequest itemRequest;
+    User user;
+    ItemRequest itemRequest;
 
     @BeforeEach
     void setUp() {

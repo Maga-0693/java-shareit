@@ -49,8 +49,8 @@ class ItemControllerTest {
     @Test
     void testSaveItemWhenCalledWithValidParametersThenReturnItemDto() throws Exception {
         ItemDto dto = ItemDto.builder()
-                .name("Созданный предмет")
-                .description("Описание созданного предмета")
+                .name("crafted item")
+                .description("description of the created item")
                 .available(true)
                 .lastBooking(new BookingItemDto(1L, 1L))
                 .nextBooking(new BookingItemDto(2L, 2L))
@@ -83,8 +83,8 @@ class ItemControllerTest {
     void testUpdateItem() throws Exception {
         ItemDto itemDto = ItemDto.builder()
                 .id(1L)
-                .name("Обновленный предмет")
-                .description("Описание обновленного предмета")
+                .name("updated item")
+                .description("description of the updated item")
                 .available(true)
                 .build();
         String itemDtoJson = mapper.writeValueAsString(itemDto);
@@ -106,8 +106,8 @@ class ItemControllerTest {
     void testGetById() throws Exception {
         ItemDto itemDto = ItemDto.builder()
                 .id(1L)
-                .name("Найденный предмет")
-                .description("Описание найденного предмета")
+                .name("found item")
+                .description("description of the found item")
                 .available(true)
                 .build();
         when(itemService.getById(1L, 1L)).thenReturn(itemDto);
@@ -126,14 +126,14 @@ class ItemControllerTest {
         List<ItemDto> items = List.of(
                 ItemDto.builder()
                         .id(1L)
-                        .name("Первый предмет")
-                        .description("Описание первого предмета")
+                        .name("first item")
+                        .description("description of the first item")
                         .available(true)
                         .build(),
                 ItemDto.builder()
                         .id(2L)
-                        .name("Второй предмет")
-                        .description("Описание второго предмета")
+                        .name("second item")
+                        .description("description of the second item")
                         .available(false)
                         .build()
         );
@@ -158,14 +158,14 @@ class ItemControllerTest {
         List<ItemDto> items = List.of(
                 ItemDto.builder()
                         .id(1L)
-                        .name("Предмет с текстом")
-                        .description("Описание первого предмета содержит text")
+                        .name("item with text")
+                        .description("the description of the first item contains text")
                         .available(true)
                         .build(),
                 ItemDto.builder()
                         .id(2L)
-                        .name("Еще один предмет")
-                        .description("Описание второго предмета также содержит text")
+                        .name("one more item")
+                        .description("the description of the second item also contains text")
                         .available(false)
                         .build()
         );
@@ -187,10 +187,10 @@ class ItemControllerTest {
 
     @Test
     void testSearchByTextWithNoResults() throws Exception {
-        when(itemService.searchByText("несуществующий текст")).thenReturn(Collections.emptyList());
+        when(itemService.searchByText("non-existent text")).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/items/search")
-                        .param("text", "несуществующий текст"))
+                        .param("text", "non-existent text"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -205,12 +205,12 @@ class ItemControllerTest {
     @Test
     void testSaveComment() throws Exception {
         CommentDto commentDto = CommentDto.builder()
-                .text("Отличный предмет")
+                .text("great item")
                 .build();
         CommentDto responseDto = CommentDto.builder()
                 .id(1L)
                 .text(commentDto.getText())
-                .authorName("Иван Иванов")
+                .authorName("Alex Vendero")
                 .created(LocalDateTime.now())
                 .build();
         String commentDtoJson = mapper.writeValueAsString(commentDto);
