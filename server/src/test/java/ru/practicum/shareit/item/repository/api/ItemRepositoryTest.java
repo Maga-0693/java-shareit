@@ -51,8 +51,8 @@ public class ItemRepositoryTest {
 
     @AfterEach
     void shutDownClean() {
-        userRepository.deleteAll();
         itemRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
