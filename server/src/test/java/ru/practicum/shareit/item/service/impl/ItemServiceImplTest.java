@@ -291,8 +291,8 @@ class ItemServiceImplTest {
         User user = new User(userId, "User Name", "user@example.com");
         Item item = new Item(itemId, "Item Name", "Item Description", true, user, null);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(itemRepository.findById(itemId)).thenReturn(Optional.of(item));
+        when(userRepository.findById(userId)).thenReturn(java.util.Optional.of(user));
+        when(itemRepository.findById(itemId)).thenReturn(java.util.Optional.of(item));
         when(bookingRepository.findFinishedBookingsByItemAndUser(itemId, userId)).thenReturn(Collections.emptyList());
 
         assertThrows(CustomBadRequestException.class, () -> itemService.saveComment(itemId, userId, commentDto),

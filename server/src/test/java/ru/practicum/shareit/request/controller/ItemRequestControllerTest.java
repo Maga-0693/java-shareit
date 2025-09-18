@@ -51,9 +51,9 @@ class ItemRequestControllerTest {
         when(itemRequestService.saveRequest(any(Long.class), any(ItemRequestDto.class))).thenReturn(itemRequestDto);
 
         mockMvc.perform(post("/requests")
-                .header(ItemRequestController.USER_ID, 2L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"description\":\"Description\"}"))
+                        .header(ItemRequestController.USER_ID, 2L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"description\":\"Description\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(itemRequestDto.getId()))
                 .andExpect(jsonPath("$.description").value(itemRequestDto.getDescription()));
@@ -64,7 +64,7 @@ class ItemRequestControllerTest {
         when(itemRequestService.getRequests(any(Long.class))).thenReturn(List.of(itemRequestDto));
 
         mockMvc.perform(get("/requests")
-                .header(ItemRequestController.USER_ID, 2L))
+                        .header(ItemRequestController.USER_ID, 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(itemRequestDto.getId()))
                 .andExpect(jsonPath("$[0].description").value(itemRequestDto.getDescription()));
@@ -76,9 +76,9 @@ class ItemRequestControllerTest {
                 .thenReturn(List.of(itemRequestDto));
 
         mockMvc.perform(get("/requests/all")
-                .header(ItemRequestController.USER_ID, 2L)
-                .param("from", "0")
-                .param("size", "10"))
+                        .header(ItemRequestController.USER_ID, 2L)
+                        .param("from", "0")
+                        .param("size", "10"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(itemRequestDto.getId()))
                 .andExpect(jsonPath("$[0].description").value(itemRequestDto.getDescription()));
@@ -89,7 +89,7 @@ class ItemRequestControllerTest {
         when(itemRequestService.getRequestById(any(Long.class), any(Long.class))).thenReturn(itemRequestDto);
 
         mockMvc.perform(get("/requests/{requestId}", 1L)
-                .header(ItemRequestController.USER_ID, 2L))
+                        .header(ItemRequestController.USER_ID, 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(itemRequestDto.getId()))
                 .andExpect(jsonPath("$.description").value(itemRequestDto.getDescription()));

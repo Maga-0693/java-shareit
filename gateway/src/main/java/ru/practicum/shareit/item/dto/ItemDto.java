@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.booking.dto.BookingItemDto;
-import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.validation.OnCreate;
 
